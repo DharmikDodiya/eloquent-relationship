@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OneToManyController;
+use App\Http\Controllers\RegionController;
 use App\Http\Controllers\StoresController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -47,7 +48,11 @@ Route::controller(SupplierController::class)->prefix('has-one-through')->group(f
     Route::delete('delete/{id}','destory');
 });
 
-Route::controller(StoresController::class)->prefix('many-to-many')->group(function(){
+Route::controller(RegionController::class)->prefix('many-to-many')->group(function(){
     Route::post('create','create');
+    Route::get('list','list');
+    Route::get('get/{id}','get');
+    Route::put('update/{id}','update');
+    Route::delete('delete/{id}','destory');
 });
 
