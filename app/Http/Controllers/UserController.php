@@ -23,7 +23,7 @@ class UserController extends Controller
         $user_id = $user->id;
         $phone = Phone::create($request->only('user_id','phone'));
         
-        return $this->success('data inserted successfully',$user,$phone);
+        return $this->success('data inserted successfully',$user,$phone);//changes
 
     }
 }
