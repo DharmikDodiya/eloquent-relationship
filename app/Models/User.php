@@ -43,7 +43,18 @@ class User extends Authenticatable
     ];
 
 
+    /**
+     * One To One Relationship
+     */
     public function phone(){
         return $this->hasOne(Phone::class);
+    }
+
+    /**
+     * One To Many Relationship
+     */
+
+    public function phones(){
+        return $this->hasMany(Phone::class);
     }
 }

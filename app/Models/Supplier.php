@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Phone extends Model
+class Supplier extends Model
 {
     use HasFactory;
 
     protected $fillable =[
-        'phone',
-        'user_id',
-        'permanent_no',
+        'supplier_name'
     ];
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function orders(){
+        return $this->hasOneThrough(Order::class,Product::class,'supplier_id','product_id','id','id');
     }
-    
 }

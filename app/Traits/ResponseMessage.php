@@ -17,12 +17,13 @@ trait ResponseMessage{
         ],401);
     }
 
-    public function success($message='',$data,$data2=''){
+    public function success($message='',$data='',$data2='', $data3 = ''){
         return response()->json([
             'status'    => 200,
             'success'   => $message,
             'data'      => $data,
-            'data2'     => $data2
+            'data2'     => $data2,
+            'data3'     => $data3
         ]);
     }
 }

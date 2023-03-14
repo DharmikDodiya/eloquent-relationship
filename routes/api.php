@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\OneToManyController;
+use App\Http\Controllers\StoresController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,4 +24,30 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(UserController::class)->prefix('one-to-one')->group(function(){
     Route::post('create','create');
+    Route::get('list','list');
+    Route::get('get/{id}','get');
+    Route::put('update/{id}','update');
+    Route::delete('delete/{id}','destory');
 });
+
+
+Route::controller(OneToManyController::class)->prefix('one-to-many')->group(function(){
+    Route::post('create','create');
+    Route::get('list','list');
+    Route::get('get/{id}','get');
+    Route::put('update/{id}','update');
+    Route::delete('delete/{id}','destory');
+});
+
+Route::controller(SupplierController::class)->prefix('has-one-through')->group(function(){
+    Route::post('create','create');
+    Route::get('list','list');
+    Route::get('get/{id}','get');
+    Route::put('update/{id}','update');
+    Route::delete('delete/{id}','destory');
+});
+
+Route::controller(StoresController::class)->prefix('many-to-many')->group(function(){
+    Route::post('create','create');
+});
+
