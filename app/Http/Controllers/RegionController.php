@@ -13,7 +13,7 @@ class RegionController extends Controller
 
     public function create(Request $request){
         $request->validate([
-            'regions_name'                 => 'required|string',
+            'regions_name'                 => 'required|string|max:30|unique:regions,regions_name',
         ]);
 
         $region = Region::create($request->only('regions_name'));

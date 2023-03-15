@@ -56,3 +56,10 @@ Route::controller(RegionController::class)->prefix('many-to-many')->group(functi
     Route::delete('delete/{id}','destory');
 });
 
+Route::controller(StoresController::class)->prefix('many-to-many-stores')->group(function(){
+    Route::post('create','create');
+    Route::get('list','list');
+    Route::get('get/{id}','get');
+    Route::put('update/{id}','update');
+    Route::delete('delete/{id}','destory');
+});
