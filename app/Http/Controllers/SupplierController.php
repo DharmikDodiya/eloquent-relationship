@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Traits\ResponseMessage;
+use Illuminate\Support\Facades\Validator;
 
 class SupplierController extends Controller
 {
@@ -14,27 +15,24 @@ class SupplierController extends Controller
     public function create(Request $request){
         $request->validate([
             'supplier_name'         => 'required|string|max:30',
-            'product_name'                 => 'required|string|max:30',
-            'order_name'              => 'required|string|max:30',
         ]);
 
+        $supplier = Supplier::create($request->only('supplier_name'));
+        return $this->success('supplier inserted successfully',$supplier);//changes
+    }
 
-        $user = Supplier::create($request->only('supplier_name'));
-        $supplier = Supplier::where('supplier_name',$request->supplier_name)->first();
-       
-        $product = Product::create([
-            'product_name'      => $request->product_name,
-            'supplier_id'       => $supplier->id
+    public function update(Request $request,Supplier $id){
+        $validatedata = Validator::make($request->all(), [
+            'supplier_name'                  => 'required|string|max:30',
         ]);
 
-        $product = Product::where('product_name',$product->product_name)->first();
-
-        $order = Order::create([
-            'order_name'              => $request->order_name,
-            'product_id'              => $product->id
-        ]);
-        
-        return $this->success('data inserted successfully',$user,$product ,$order);//changes
+        if($validatedata->fails()){
+            return $this->ErrorResponse($validatedata);  
+        }
+        else{
+            $id->update($request->only('supplier_name'));
+            return $this->success('Updated supplier',$id);
+        }
     }
 
     

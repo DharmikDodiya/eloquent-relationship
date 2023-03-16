@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\OneToManyController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\StoresController;
 use App\Http\Controllers\SupplierController;
@@ -40,7 +42,23 @@ Route::controller(OneToManyController::class)->prefix('one-to-many')->group(func
     Route::delete('delete/{id}','destory');
 });
 
-Route::controller(SupplierController::class)->prefix('has-one-through')->group(function(){
+Route::controller(SupplierController::class)->prefix('supplier')->group(function(){
+    Route::post('create','create');
+    Route::get('list','list');
+    Route::get('get/{id}','get');
+    Route::put('update/{id}','update');
+    Route::delete('delete/{id}','destory');
+});
+
+Route::controller(ProductController::class)->prefix('product')->group(function(){
+    Route::post('create','create');
+    Route::get('list','list');
+    Route::get('get/{id}','get');
+    Route::put('update/{id}','update');
+    Route::delete('delete/{id}','destory');
+});
+
+Route::controller(OrderController::class)->prefix('order')->group(function(){
     Route::post('create','create');
     Route::get('list','list');
     Route::get('get/{id}','get');

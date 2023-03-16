@@ -13,6 +13,6 @@ class Supplier extends Model
         'supplier_name'
     ];
     public function orders(){
-        return $this->hasOneThrough(Order::class,Product::class,'supplier_id','product_id','id','id');
+        return $this->hasManyThrough(Order::class,Product::class,'supplier_id','product_id','id','id');
     }
 }
