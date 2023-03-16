@@ -39,6 +39,7 @@ class RegionController extends Controller
             return $this->DataNotFound();
         }
         else{
+            $region->stores()->detach();
             $region->delete();
             return $this->success('Region Deleted Successfuly');
         }
@@ -65,6 +66,7 @@ class RegionController extends Controller
         if(is_null($region)){
             return $this->DataNotFound();
         }
+       
         return $this->success('region detail',$region);
     }
 

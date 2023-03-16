@@ -41,8 +41,8 @@ class StoresController extends Controller
         if(is_null($stores)){
             return $this->DataNotFound();
         }
-            $stores->delete();
             $stores->regions()->detach();
+            $stores->delete();
             return $this->success('stores deleted successfully');
     }
 
