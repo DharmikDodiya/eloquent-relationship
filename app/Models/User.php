@@ -57,4 +57,9 @@ class User extends Authenticatable
     public function phones(){
         return $this->hasMany(Phone::class);
     }
+
+    public function latestphone()
+    {
+        return $this->hasOne(Phone::class)->latestOfMany();
+    }
 }

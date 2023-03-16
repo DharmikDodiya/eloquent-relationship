@@ -31,6 +31,7 @@ Route::controller(UserController::class)->prefix('one-to-one')->group(function()
     Route::get('get/{id}','get');
     Route::put('update/{id}','update');
     Route::delete('delete/{id}','destory');
+    Route::get('latest-phone/{id}','latestPhone');
 });
 
 
@@ -81,3 +82,4 @@ Route::controller(StoresController::class)->prefix('many-to-many-stores')->group
     Route::put('update/{id}','update');
     Route::delete('delete/{id}','destory');
 });
+

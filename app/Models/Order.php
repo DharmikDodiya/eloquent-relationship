@@ -15,6 +15,6 @@ class Order extends Model
     ];
     
     public function supplier(){
-        return $this->hasManyThrough(Supplier::class,Product::class,'supplier_id','id','id');    
+        return $this->hasOneThrough(Supplier::class,Product::class,'supplier_id','id','product_id','id');    
     }
 }

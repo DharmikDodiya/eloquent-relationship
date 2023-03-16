@@ -86,4 +86,10 @@ class UserController extends Controller
             return $this->success('User Deleted Successfuly');
         }
     }
+
+    public function latestPhone($id){
+        $phone = User::with('latestphone')->find($id);
+
+        return $this->success('latest phone data',$phone);
+    }
 }
