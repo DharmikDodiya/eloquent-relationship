@@ -13,7 +13,7 @@ class OneToManyController extends Controller
     use ResponseMessage;
     public function create(Request $request){
         $request->validate([
-            'phone'                 => 'required|min:10|max:10,unique:phones,phone|numeric',
+            'phone'                 => 'required|min:10|max:10,unique:phones,phone',
             'user_id'               => 'required|exists:users,id'  
         ]);
 
@@ -41,8 +41,8 @@ class OneToManyController extends Controller
     public function update(Request $request ,Phone $id){
             
         $request->validate([
-            'phone'     => 'required|min:10|max:10',
-            'user_id'   => 'required|exists:users,id'
+            'phone'     => 'min:10|max:10',
+            'user_id'   => 'required|exists:phones,user_id'
         ]);
             $id->update($request->only('phone'));
             return $this->success('Updated Data',$id);
