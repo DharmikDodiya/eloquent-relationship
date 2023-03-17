@@ -42,28 +42,19 @@ class UserController extends Controller
     }
 
     public function update(Request $request ,User $id){
-               
-        $input = $request->all();
-        $validatedata = Validator::make($request->all(), [
+        $request->validate([
             'name'                  => 'string|max:30',
             'email'                 => 'email',
             'password'              => 'min:8|max:12',
             'phone'                 => 'min:10|max:10,unique:phones,phone  ',
         ]);
-
-        if($validatedata->fails()){
-            return $this->ErrorResponse($validatedata);  
-        }
-        else{
-
         $id->update($request->only('name','email','password'));
         $phone = Phone::where('user_id',$id->id)->update([
             'phone'     => $request->phone,
-            'user_id'   => $id->id
         ]);
         $phonedata = Phone::find($phone)->first();
             return $this->success('Updated Data',$id,$phonedata);
-        }
+        
     }
 
     public function destory($id){

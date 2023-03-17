@@ -21,18 +21,13 @@ class ProductController extends Controller
     }
 
     public function update(Request $request,Product $id){
-        $validatedata = Validator::make($request->all(), [
+        $request->validate([
             'product_name'                  => 'required|string|max:30',
-            'supplier_id'                   => 'required|exists:suppliers,id|numeric'  
+            'supplier_id'                   => 'required|exists:suppliers,id|numeric' 
         ]);
-
-        if($validatedata->fails()){
-            return $this->ErrorResponse($validatedata);  
-        }
-        else{
             $id->update($request->only('product_name','supplier_id'));
             return $this->success('product updated',$id);
-        }
+        
     }
 
     public function get($id){

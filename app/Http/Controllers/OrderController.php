@@ -21,18 +21,14 @@ class OrderController extends Controller
     }
 
     public function update(Request $request,Order $id){
-        $validatedata = Validator::make($request->all(), [
+        $request->validate([
             'order_name'                    => 'required|string|max:30',
             'product_id'                    => 'required|exists:products,id|numeric'
-        ]);
-
-        if($validatedata->fails()){
-            return $this->ErrorResponse($validatedata);  
-        }
-        else{
+        ]);     
+       
             $id->update($request->only('order_name','product_id'));
             return $this->success('Updated order',$id);
-        }
+        
     }
 
     public function get($id){

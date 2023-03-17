@@ -40,18 +40,12 @@ class OneToManyController extends Controller
 
     public function update(Request $request ,Phone $id){
             
-        $validatedata = Validator::make($request->all(), [
-            'phone'     => 'required|min:10|max:10|numeric',
+        $request->validate([
+            'phone'     => 'required|min:10|max:10',
             'user_id'   => 'required|exists:users,id'
         ]);
-
-        if($validatedata->fails()){
-            return $this->ErrorResponse($validatedata);  
-        }
-        else{
             $id->update($request->only('phone'));
             return $this->success('Updated Data',$id);
-        }
     }
 
     public function destory($id){

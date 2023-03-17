@@ -23,18 +23,12 @@ class RegionController extends Controller
     }
 
     public function update(Request $request ,Region $id){
-               
-        $validatedata = Validator::make($request->all(), [
+        $request->validate([
             'regions_name'                  => 'required|string|max:30',
         ]);
-
-        if($validatedata->fails()){
-            return $this->ErrorResponse($validatedata);  
-        }
-        else{
             $id->update($request->only('regions_name'));
             return $this->success('Updated Region',$id);
-        }
+        
     }
 
     public function list(){

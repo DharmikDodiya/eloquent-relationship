@@ -39,21 +39,15 @@ class StoresController extends Controller
     }
 
     public function update(Request $request,Stores $id){
-        $validatedata = Validator::make($request->all(), [
+        $request->validate([
             'stores_name'                  => 'required|string|max:30',
             'regions_id'                   => 'required|exists:regions,id'
         ]);
-    
-        if($validatedata->fails()){
-            return $this->ErrorResponse($validatedata);  
-        }
-        else{
             $regions_ids = $request->regions_id;
             $id->update($request->only('stores_name'));
             $id->regions()->sync($regions_ids);
             return $this->success('Updated stores',$id);
         }
-    }
 
     public function get($id){
         $stores = Stores::findOrFail($id);

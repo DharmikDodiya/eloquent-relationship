@@ -22,17 +22,12 @@ class SupplierController extends Controller
     }
 
     public function update(Request $request,Supplier $id){
-        $validatedata = Validator::make($request->all(), [
+        $request->validate([
             'supplier_name'                  => 'required|string|max:30',
         ]);
 
-        if($validatedata->fails()){
-            return $this->ErrorResponse($validatedata);  
-        }
-        else{
             $id->update($request->only('supplier_name'));
             return $this->success('Updated supplier',$id);
-        }
     }
 
     public function get($id){
