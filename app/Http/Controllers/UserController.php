@@ -45,10 +45,10 @@ class UserController extends Controller
                
         $input = $request->all();
         $validatedata = Validator::make($request->all(), [
-            'name'                  => 'required|string|max:30',
-            'email'                 => 'required|email',
-            'password'              => 'required|min:8|max:12',
-            'phone'                 => 'required|min:10|max:10,unique:phones,phone  ',
+            'name'                  => 'string|max:30',
+            'email'                 => 'email',
+            'password'              => 'min:8|max:12',
+            'phone'                 => 'min:10|max:10,unique:phones,phone  ',
         ]);
 
         if($validatedata->fails()){
