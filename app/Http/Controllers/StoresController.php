@@ -28,19 +28,11 @@ class StoresController extends Controller
 
     public function list(){
         $stores = Stores::all();
-
-        if(is_null($stores)){
-            return $this->DataNotFound();
-        }
         return $this->success('list stores',$stores);
     }
 
     public function destory($id){
-        $stores = Stores::find($id);
-        
-        if(is_null($stores)){
-            return $this->DataNotFound();
-        }
+        $stores = Stores::findOrFail($id);
             $stores->regions()->detach();
             $stores->delete();
             return $this->success('stores deleted successfully');
@@ -64,13 +56,9 @@ class StoresController extends Controller
     }
 
     public function get($id){
-        $stores = Stores::find($id);
-        if(is_null($stores)){
-            return $this->DataNotFound();
-        }
-        else{
+        $stores = Stores::findOrFail($id);
             $stores->regions;
             return $this->success('stores Details',$stores); 
-        }
+        
     }
 }

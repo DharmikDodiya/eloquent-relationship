@@ -35,34 +35,19 @@ class SupplierController extends Controller
         }
     }
 
-    
-
-
     public function get($id){
-        $supplier = Supplier::with('orders')->find($id);
-
-        if(is_null($supplier)){
-            return $this->DataNotFound();
-        }
+        $supplier = Supplier::with('orders')->findOrFail($id);
         return $this->success('suppliers all data',$supplier);
     }
 
     public function destory($id){
-        $supplier = Supplier::find($id);
-
-        if(is_null($supplier)){
-            return $this->DataNotFound();
-        }
+        $supplier = Supplier::findOrFail($id);
         $supplier->delete();
         return $this->success('supplier deleted successfully');
     }
 
     public function list(){
         $supplier = Supplier::all();
-
-        if(is_null($supplier)){
-            return $this->DataNotFound();
-        }
         return $this->success('suppliers details',$supplier);
     }
 }

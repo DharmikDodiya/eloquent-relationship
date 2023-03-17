@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Region;
+use App\Models\Stores;
 use Illuminate\Http\Request;
 use App\Traits\ResponseMessage;
 use Illuminate\Support\Facades\Validator; 
@@ -21,30 +22,6 @@ class RegionController extends Controller
         return $this->success('regions created successfully');
     }
 
-    public function list(){
-        $region = Region::all();
-        
-        if(is_null($region)){
-            return $this->DataNotFound();
-        }
-        return $this->success('list region',$region);
-    }
-
-
-
-    public function destory($id){
-        $region = Region::find($id);
-       
-        if(is_null($region)){
-            return $this->DataNotFound();
-        }
-        else{
-            $region->stores()->detach();
-            $region->delete();
-            return $this->success('Region Deleted Successfuly');
-        }
-    }
-
     public function update(Request $request ,Region $id){
                
         $validatedata = Validator::make($request->all(), [
@@ -60,13 +37,21 @@ class RegionController extends Controller
         }
     }
 
-    public function get($id){
-        $region = Region::find($id);
+    public function list(){
+        $region = Region::all();
+        return $this->success('list region',$region);
+    }
 
-        if(is_null($region)){
-            return $this->DataNotFound();
-        }
-       
+    public function destory($id){
+        $region = Region::findOrFail($id);
+            $region->stores()->detach();
+            $region->delete();
+            return $this->success('Region Deleted Successfuly');
+        
+    }
+
+    public function get($id){
+        $region = Region::with('stores')->findOrFail($id);
         return $this->success('region detail',$region);
     }
 

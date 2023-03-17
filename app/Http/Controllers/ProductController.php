@@ -36,30 +36,18 @@ class ProductController extends Controller
     }
 
     public function get($id){
-        $product = Product::find($id);
-
-        if(is_null($product)){
-            return $this->DataNotFound();
-        }
+        $product = Product::findOrFail($id);
         return $this->success('product all data',$product);
     }
 
     public function destory($id){
-        $product = Product::find($id);
-
-        if(is_null($product)){
-            return $this->DataNotFound();
-        }
+        $product = Product::findOrFail($id);
         $product->delete();
         return $this->success('product deleted successfully');
     }
 
     public function list(){
         $product = Product::all();
-
-        if(is_null($product)){
-            return $this->DataNotFound();
-        }
         return $this->success('product details',$product);
     }
 }

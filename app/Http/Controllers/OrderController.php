@@ -35,34 +35,19 @@ class OrderController extends Controller
         }
     }
 
-    
-
-
     public function get($id){
-        $order = Order::with('supplier')->find($id);
-
-        if(is_null($order)){
-            return $this->DataNotFound();
-        }
+        $order = Order::with('supplier')->findOrFail($id);
         return $this->success('orders with supplier data',$order);
     }
 
     public function destory($id){
-        $order = Order::find($id);
-
-        if(is_null($order)){
-            return $this->DataNotFound();
-        }
+        $order = Order::findOrFail($id);
         $order->delete();
         return $this->success('order deleted successfully');
     }
 
     public function list(){
         $order = Order::all();
-
-        if(is_null($order)){
-            return $this->DataNotFound();
-        }
         return $this->success('order details',$order);
     }
 }

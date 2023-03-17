@@ -33,19 +33,11 @@ class UserController extends Controller
 
     public function list(){
         $user = User::all();
-
-        if(count($user) > 0){
-            return $this->Success('user details' , $user);
-        }
-        return $this->DataNotFound();
+        return $this->success('user list',$user);
     }
 
     public function get($id){
-        $userData = User::with('phone')->find($id);
-
-        if(is_null($userData)){
-            return $this->DataNotFound();
-        }
+        $userData = User::with('phone')->findOrFail($id);
         return $this->success('User Details',$userData);
     }
 
@@ -70,26 +62,19 @@ class UserController extends Controller
             'user_id'   => $id->id
         ]);
         $phonedata = Phone::find($phone)->first();
-
             return $this->success('Updated Data',$id,$phonedata);
         }
     }
 
     public function destory($id){
-        $userdata = User::find($id);
-       
-        if(is_null($userdata)){
-            return $this->DataNotFound();
-        }
-        else{
+        $userdata = User::findOrFail($id);
             $userdata->delete();
             return $this->success('User Deleted Successfuly');
-        }
+        
     }
 
     public function latestPhone($id){
         $phone = User::with('latestphone')->find($id);
-
         return $this->success('latest phone data',$phone);
     }
 }

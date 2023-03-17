@@ -28,19 +28,13 @@ class OneToManyController extends Controller
 
     public function list(){
         $user = Phone::all();
-
-        if(count($user) > 0){
             return $this->Success('user details' , $user);
-        }
-        return $this->DataNotFound();
+      
     }
 
     public function get($id){
-        $userData = User::with('phones')->find($id);
+        $userData = User::with('phones')->findOrFail($id);
 
-        if(is_null($userData)){
-            return $this->DataNotFound();
-        }
         return $this->success('User Details',$userData);
     }
 
@@ -61,14 +55,9 @@ class OneToManyController extends Controller
     }
 
     public function destory($id){
-        $phonedata = Phone::find($id);
-       
-        if(is_null($phonedata)){
-            return $this->DataNotFound();
-        }
-        else{
-            $phonedata->delete();
+        $phonedata = Phone::findOrFail($id);
+    $phonedata->delete();
             return $this->success('phoneno Deleted Successfuly');
-        }
+        
     }
 }
