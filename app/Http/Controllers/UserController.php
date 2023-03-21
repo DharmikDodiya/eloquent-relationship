@@ -6,6 +6,7 @@ use App\Models\Phone;
 use Illuminate\Http\Request;
 use App\Traits\ResponseMessage;
 use GrahamCampbell\ResultType\Success;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -20,7 +21,9 @@ class UserController extends Controller
         ]);
 
 
-        $user = User::create($request->only('name','email','password'));
+        $user = User::create($request->only(['name','email'])+[
+            'password'      => Hash::make($request->password),
+        ]);
         $user = User::where('email',$request->email)->first();
        
         $phone = Phone::create([
@@ -46,14 +49,12 @@ class UserController extends Controller
             'name'                  => 'string|max:30',
             'email'                 => 'email',
             'password'              => 'min:8|max:12',
-            'phone'                 => 'min:10|max:10,unique:phones,phone  ',
         ]);
-        $id->update($request->only('name','email','password'));
-        $phone = Phone::where('user_id',$id->id)->update([
-            'phone'     => $request->phone,
+        $id->update($request->only(['name','email'])+
+        [
+            'password'      => Hash::make($request->password),
         ]);
-        $phonedata = Phone::find($phone)->first();
-            return $this->success('Updated Data',$id,$phonedata);
+            return $this->success('Updated Data',$id);
         
     }
 

@@ -50,8 +50,7 @@ class OneToManyController extends Controller
 
     public function destory($id){
         $phonedata = Phone::findOrFail($id);
-    $phonedata->delete();
+        $phonedata->delete();
             return $this->success('phoneno Deleted Successfuly');
-        
     }
 }
