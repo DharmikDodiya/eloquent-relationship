@@ -5,9 +5,7 @@ use App\Models\User;
 use App\Models\Phone;
 use Illuminate\Http\Request;
 use App\Traits\ResponseMessage;
-use GrahamCampbell\ResultType\Success;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+
 
 class UserController extends Controller
 {
@@ -21,9 +19,7 @@ class UserController extends Controller
         ]);
 
 
-        $user = User::create($request->only(['name','email'])+[
-            'password'      => Hash::make($request->password),
-        ]);
+        $user = User::create($request->only('name','email','password'));
         $user = User::where('email',$request->email)->first();
        
         $phone = Phone::create([
@@ -39,7 +35,7 @@ class UserController extends Controller
         return $this->success('user list',$user);
     }
 
-    public function get($id){
+    public function get($id){ 
         $userData = User::with('phone')->findOrFail($id);
         return $this->success('User Details',$userData);
     }
@@ -50,10 +46,7 @@ class UserController extends Controller
             'email'                 => 'email',
             'password'              => 'min:8|max:12',
         ]);
-        $id->update($request->only(['name','email'])+
-        [
-            'password'      => Hash::make($request->password),
-        ]);
+        $id->update($request->only('name','email','password'));
             return $this->success('Updated Data',$id);
         
     }
